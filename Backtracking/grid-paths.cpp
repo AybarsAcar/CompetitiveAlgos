@@ -31,8 +31,18 @@ int CountPaths(int i, int j, int m, int n)
   return CountPaths(i + 1, j, m, n) + CountPaths(i, j + 1, m, n);
 }
 
+/**
+ * @brief return ((m-1) + (n-1))! / (m-1)! (n-1)!
+ *
+ * @param i
+ * @param j
+ * @param m
+ * @param n
+ * @return int
+ */
 int CountPathsWithPermutations(int i, int j, int m, int n)
 {
+  return 1;
 }
 
 int main()
