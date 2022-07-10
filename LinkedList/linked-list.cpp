@@ -37,5 +37,19 @@ int main()
 
   PrintList(list);
 
+  SinglyLinkedList<string> list2;
+
+  list2.PushBack("Hello");
+
+  list2.PushBack("World");
+
+  PrintList(list2);
+
+  list2.Reverse();
+
+  cout << list2.Search("Hello") << endl;
+
+  PrintList(list2);
+
   return 0;
 }

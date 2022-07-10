@@ -5,7 +5,7 @@ template <typename T>
 class Node
 {
   // public:
-  int data;
+  T data;
   Node<T> *next;
 
 public:
