@@ -5,7 +5,8 @@
 
 using namespace std;
 
-void PrintList(const SinglyLinkedList &list)
+template <typename T>
+void PrintList(const SinglyLinkedList<T> &list)
 {
   auto head = list.Begin();
 
@@ -20,7 +21,7 @@ void PrintList(const SinglyLinkedList &list)
 
 int main()
 {
-  SinglyLinkedList list;
+  SinglyLinkedList<int> list;
 
   list.PushBack(10);
   list.PushBack(20);

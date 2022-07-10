@@ -1,13 +1,15 @@
+template <typename T>
 class SinglyLinkedList;
 
+template <typename T>
 class Node
 {
   // public:
   int data;
-  Node *next;
+  Node<T> *next;
 
 public:
-  Node(int data) : data(data), next(nullptr) {}
+  Node(T data) : data(data), next(nullptr) {}
 
   ~Node()
   {
@@ -17,7 +19,7 @@ public:
     }
   }
 
-  int GetData()
+  T GetData()
   {
     return data;
   }
@@ -27,16 +29,17 @@ public:
     return next;
   }
 
-  friend class SinglyLinkedList;
+  friend class SinglyLinkedList<T>;
 };
 
+template <typename T>
 class SinglyLinkedList
 {
-  Node *head;
-  Node *tail;
+  Node<T> *head;
+  Node<T> *tail;
   int size;
 
-  int searchHelper(Node *start, int value)
+  int searchHelper(Node<T> *start, T value)
   {
     // base case
     if (start == nullptr)
@@ -64,23 +67,23 @@ public:
   SinglyLinkedList() : head(nullptr), tail(nullptr), size(0){};
   ~SinglyLinkedList();
 
-  int At(const int position);
+  T At(const int position);
 
-  Node *Begin() const;
+  Node<T> *Begin() const;
 
-  void Insert(const int data, const int position);
+  void Insert(const T data, const int position);
 
-  int PopBack();
+  T PopBack();
 
-  int PopFront();
+  T PopFront();
 
-  void PushBack(const int data);
+  void PushBack(const T data);
 
-  void PushFront(const int data);
+  void PushFront(const T data);
 
   void Print() const;
 
-  int Remove(const int position);
+  T Remove(const int position);
 
   void Reverse();
 
@@ -92,14 +95,15 @@ public:
    * @param value
    * @return int
    */
-  int Search(const int value);
+  int Search(const T value);
 
-  int SearchRecursively(const int value);
+  int SearchRecursively(const T value);
 
   int Size();
 };
 
-int SinglyLinkedList::At(const int position)
+template <typename T>
+T SinglyLinkedList<T>::At(const int position)
 {
   auto current = head;
   for (size_t i = 0; i < position; i++)
@@ -110,12 +114,14 @@ int SinglyLinkedList::At(const int position)
   return current->data;
 }
 
-Node *SinglyLinkedList::Begin() const
+template <typename T>
+Node<T> *SinglyLinkedList<T>::Begin() const
 {
   return head;
 }
 
-void SinglyLinkedList::Insert(const int data, const int position)
+template <typename T>
+void SinglyLinkedList<T>::Insert(const T data, const int position)
 {
   if (position == 0)
   {
@@ -139,7 +145,8 @@ void SinglyLinkedList::Insert(const int data, const int position)
   size++;
 }
 
-int SinglyLinkedList::PopBack()
+template <typename T>
+T SinglyLinkedList<T>::PopBack()
 {
   auto temp = head;
 
@@ -159,7 +166,8 @@ int SinglyLinkedList::PopBack()
   return data;
 }
 
-int SinglyLinkedList::PopFront()
+template <typename T>
+T SinglyLinkedList<T>::PopFront()
 {
   auto first = head;
 
@@ -175,7 +183,8 @@ int SinglyLinkedList::PopFront()
   return data;
 }
 
-void SinglyLinkedList::PushBack(const int data)
+template <typename T>
+void SinglyLinkedList<T>::PushBack(const T data)
 {
   if (head == nullptr)
   {
@@ -196,7 +205,8 @@ void SinglyLinkedList::PushBack(const int data)
   size++;
 }
 
-void SinglyLinkedList::PushFront(const int data)
+template <typename T>
+void SinglyLinkedList<T>::PushFront(const T data)
 {
   if (head == nullptr)
   {
@@ -214,11 +224,13 @@ void SinglyLinkedList::PushFront(const int data)
   size++;
 }
 
-void SinglyLinkedList::Print() const
+template <typename T>
+void SinglyLinkedList<T>::Print() const
 {
 }
 
-int SinglyLinkedList::Remove(const int position)
+template <typename T>
+T SinglyLinkedList<T>::Remove(const int position)
 {
   if (position == 0)
   {
@@ -244,11 +256,12 @@ int SinglyLinkedList::Remove(const int position)
   return data;
 }
 
-void SinglyLinkedList::Reverse()
+template <typename T>
+void SinglyLinkedList<T>::Reverse()
 {
   auto current = head;
-  Node *previous = nullptr;
-  Node *next = nullptr;
+  Node<T> *previous = nullptr;
+  Node<T> *next = nullptr;
 
   while (current != nullptr)
   {
@@ -263,7 +276,8 @@ void SinglyLinkedList::Reverse()
   head = previous;
 }
 
-int SinglyLinkedList::Search(const int value)
+template <typename T>
+int SinglyLinkedList<T>::Search(const T value)
 {
   auto temp = head;
   int index = 0;
@@ -281,17 +295,20 @@ int SinglyLinkedList::Search(const int value)
   return -1;
 }
 
-int SinglyLinkedList::SearchRecursively(const int value)
+template <typename T>
+int SinglyLinkedList<T>::SearchRecursively(const T value)
 {
   return searchHelper(head, value);
 }
 
-int SinglyLinkedList::Size()
+template <typename T>
+int SinglyLinkedList<T>::Size()
 {
   return size;
 }
 
-SinglyLinkedList::~SinglyLinkedList()
+template <typename T>
+SinglyLinkedList<T>::~SinglyLinkedList()
 {
   if (head != nullptr)
   {
