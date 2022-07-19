@@ -79,6 +79,23 @@ Node *BuildTree()
   return node;
 }
 
+int Height(Node *root)
+{
+  // base case
+  if (root == nullptr)
+  {
+    return 0;
+  }
+
+  // height of left subtree
+  int h1 = Height(root->left);
+
+  // height of right subtree
+  int h2 = Height(root->right);
+
+  return 1 + max(h1, h2);
+}
+
 void PrintPreOrder(Node *root)
 {
   if (root == nullptr)
@@ -90,6 +107,98 @@ void PrintPreOrder(Node *root)
 
   PrintPreOrder(root->left);
   PrintPreOrder(root->right);
+}
+
+/**
+ * @brief
+ * returns the sum of all the nodes in a given root
+ * node of a Binary Tree
+ *
+ * @param root
+ * @return int
+ */
+int SumNodes(Node *root)
+{
+  if (root == nullptr)
+  {
+    return 0;
+  }
+
+  return root->data + SumNodes(root->left) + SumNodes(root->right);
+}
+
+/**
+ * @brief
+ * returns the max distance between 2 nodes in a Binary Tree
+ * given its root node
+ *
+ * Time Complexity: O(n^2)
+ *
+ * @param root
+ * @return int
+ */
+int Diameter(Node *root)
+{
+  // base case
+  if (root == nullptr)
+    return 0;
+
+  // recursive case
+  // D1 passes through the root
+  int d1 = Height(root->left) + Height(root->right);
+
+  // the diameter lies in the left subtree
+  int d2 = Diameter(root->left);
+
+  // the diameter lies in the right subtree
+  int d3 = Diameter(root->right);
+
+  return max(d1, max(d2, d3));
+}
+
+struct HDPair
+{
+  int height;
+  int diameter;
+};
+
+/**
+ * @brief
+ * returns the max distance between 2 nodes in a Binary Tree
+ * given its root node
+ *
+ * Time Complexity: O(n)
+ *
+ * @param root
+ * @return HDPair
+ */
+HDPair DiameterOptimised(Node *root)
+{
+  // first = height, second = diameter
+  HDPair p;
+
+  // base case
+  if (root == nullptr)
+  {
+    p.height = p.diameter = 0;
+    return p;
+  }
+
+  // recursive
+  auto leftPair = DiameterOptimised(root->left);
+  auto rightPair = DiameterOptimised(root->right);
+
+  // compute the height at current node
+  p.height = max(leftPair.height, rightPair.height) + 1;
+
+  // compute the diameter
+  int D1 = leftPair.height + rightPair.height;
+  int D2 = leftPair.diameter;
+  int D3 = rightPair.diameter;
+
+  p.diameter = max(D1, max(D2, D3));
+
+  return p;
 }
 
 void PrintInOrder(Node *root)
@@ -104,6 +213,25 @@ void PrintInOrder(Node *root)
   cout << root->data << " ";
 
   PrintInOrder(root->right);
+}
+
+/**
+ * @brief
+ * Prints the Kth level in a binary tree
+ *
+ * @param root
+ * @param k
+ */
+void PrintKthLevel(Node *root, int k)
+{
+  if (root == nullptr || k < 0)
+    return;
+
+  if (k == 0)
+    cout << root->data << " ";
+
+  PrintKthLevel(root->left, k - 1);
+  PrintKthLevel(root->right, k - 1);
 }
 
 void PrintPostOrder(Node *root)
@@ -170,6 +298,15 @@ int main()
 
   PrintLevelOrder(root);
   cout << endl;
+
+  PrintKthLevel(root, 2);
+
+  cout << endl;
+
+  cout << SumNodes(root) << endl;
+
+  cout << "Diameter is " << Diameter(root) << endl;
+  cout << "Optimised Diameter is " << DiameterOptimised(root).diameter << endl;
 
   return 0;
 }
